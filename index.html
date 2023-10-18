@@ -9,13 +9,79 @@
 
     <title>Interactive card details form</title>
   </head>
-  <body id="main">
-    <div class="cartoes">
-      <div class="teste">
-        <span class="frente-cartao"> </span>
-        <span class="traseira-cartao"> </span>
+  <body>
+    <main id="main">
+      <div class="cartoes-bg">
+        <div class="cartoes">
+          <span class="frente-cartao"
+            ><img src="images/card-logo.svg" alt="Logo do cartão" />
+            <div class="dados-cartao">
+              <p class="numero-cartao">{{numeroCartao}}</p>
+              <div class="nome-data">
+                <p>{{portadorCartao}}</p>
+                <p>{{vencimentoCartaoMes}}{{`/${vencimentoCartaoAno}`}}</p>
+              </div>
+            </div>
+          </span>
+          <span class="traseira-cartao"><p>{{cvc}}</p></span>
+        </div>
       </div>
-    </div>
+      <section v-if="!confirmarBotao">
+        <div class="dados">
+          <div class="nome">
+            <span>CARDHOLDER NAME</span>
+            <input
+              @input="portadorCartaoFiltro"
+              type="text"
+              placeholder="Informe o portador do cartão"
+            />
+          </div>
+          <div class="numero">
+            <span>CARD NUMBER</span>
+            <input
+              @input="vencimentoCartaoFiltro"
+              type="text"
+              placeholder="Digite o número do cartão"
+            />
+          </div>
+          <div class="data-cv">
+            <div class="data">
+              <span class="mm-yy"
+                >EXP. DATE (MM/YY)
+                <div>
+                  <input
+                    v-model="vencimentoCartaoMes"
+                    type="number"
+                    placeholder="MM"
+                  />
+                  <input
+                    v-model="vencimentoCartaoAno"
+                    type="number"
+                    placeholder="YY"
+                  />
+                </div>
+              </span>
+            </div>
+            <div class="cv">
+              <span>CVC</span>
+              <input
+                @input="filtrarCvc"
+                type="number"
+                placeholder="Código de segurança"
+              />
+            </div>
+          </div>
+          <button @click="confirmar">Confirm</button>
+        </div>
+      </section>
+      <div v-if="confirmarBotao" class="modal">
+        <div>
+          <img src="images/icon-complete.svg" alt="Sucesso ao enviar dados" />
+          <h1>THANK YOU!</h1>
+          <p>We've added your card details</p>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
 
